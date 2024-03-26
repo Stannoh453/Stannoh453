@@ -3,6 +3,7 @@
 - 🌱 I’m currently learning cybersecurity but am in the IT industry
 - 💞️ I’m looking to collaborate on hacking and programming
 - 📫 reach me on instagram at @gatie stillar
+- and facebook.
 - 😄 Pronouns: ...
 - ⚡ Fun fact: if i want something i go for it
 
