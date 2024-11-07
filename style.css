@@ -1,0 +1,103 @@
+html,
+
+body{
+    height: 100%;
+    text-align: center;
+}
+
+img {
+    max-width: 100%;
+}
+
+body{
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizelegibility;
+    color: #6c6f73;
+}
+
+h1,h2,h3,h4,h5 {
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+h6{
+    padding-top: 30px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 0.8rem;
+    letter-spacing: 0.1rem;
+}
+
+img{
+    max-width: 100%;
+}
+
+h2{
+    padding-top: 15px;
+}
+
+ul{
+    padding-bottom: 20px;
+}
+
+.list-group-item {
+    border-style: none;
+}
+
+.headbar {
+    background-color: #2196F3;
+}
+
+.headbar h1 {
+    color: white;
+}
+
+.profile-pic {
+    padding-bottom: 30px;
+}
+
+.bio {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.education {
+    border-bottom: 1px solid black;
+}
+
+.work {
+    border-bottom: 1px solid black;
+}
+
+#footer-main {
+    padding-top: 15px;
+    background: #222;
+    color: white;
+    font-size: 0.8rem;
+    padding: 2.5rem 0;
+}
+
+#workskills1{
+    padding-top: 15px;
+}
+
+#workskills2{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+
+/* media query */
+
+@media screen and (min-width : 991px ){
+
+    .feature-content{
+        display: flex;
+        align-items: center;
+    }
+
+}
