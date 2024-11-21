@@ -1,165 +1,197 @@
-from datetime import time
+from datetime import datetime
+import random
+import string
 
-print("welcome to safaricom mpesa app")
+
+def generate_code():
+    """Generates a random 8-character alphanumeric code."""
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+trcode = generate_code()
+
+def change_pin():
+    if validate_pin():
+        new_pin = input("Enter new PIN: ")
+        confirm_pin = input("Confirm new PIN: ")
+        if new_pin == confirm_pin:
+            baldict["pin"] = new_pin
+            print("PIN updated successfully.")
+        else:
+            print("Entered PINs do not match. Please try again.")
+    else:
+        print("PIN validation failed.")
+    print(f"Current stored PIN: {baldict['pin']}")
+
+
+baldict = {
+    "balances": 2000,
+    "mbal": 2000,
+    "pin": "1234" 
+}
+
+
+def transaction(amount, action="withdraw"):
+   
+    if action == "withdraw":
+        if amount > baldict["balances"]:
+            print("Insufficient funds!")
+            return
+        baldict["balances"] -= amount
+        print(f"You have withdrawn {amount}. New balance: {baldict['balances']}")
+    elif action == "deposit":
+        baldict["balances"] += amount
+        print(f"You have deposited {amount}. New balance: {baldict['balances']}")
+    else:
+        print("Invalid transaction type.")
+
+
 print("1. send money")
 print("2. withdraw cash")
 print("3. loans and savings")
 print("4. lipa na mpesa")
-print("5. my account")
+print("5. my_acount")
+current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-
-def spin():
+def validate_pin():
     max_att = 3
-    while max_att < 3:
-        pinc()
+    for attempt in range(max_att):
+        s = input("Enter PIN: ")
+        print(f"Validating PIN: {s} against stored PIN: {baldict['pin']}")
+        if s == baldict["pin"]:
+            return True
+        else:
+            print(f"Incorrect PIN. {max_att - attempt - 1} attempts left.")
+    print("Maximum attempts reached. Exiting.")
+    return False
+
+    return False
+def sendmoney():
+    print("Send money")
+    num = input("Enter number: ")
+    amnt = input("Enter amount: ")
+    print(f"Send Ksh {amnt} to {num}?")
+    pre()
+    validate_pin()
+    
+    print(f"{trcode} - Confirmed: Ksh {amnt} sent to {num} at {current_time}")
+
+
+def withdraw():
+    print("Option selected is withdraw cash")
+    print("1. From agent number")
+    print("2. From ATM")
+    opt = input("Enter option: ")
+    if opt == "1":
+        print("Option selected is from agent number")
+        agent_no = input("Enter agent number: ")
+        withd = input("Enter amount to withdraw: ")
+        print(f"Withdraw Ksh {withd} from agent number {agent_no}?")
+        pre()
+        validate_pin()
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{trcode} - Confirmed: Ksh {withd} withdrawn from agent number {agent_no} on {current_time}")
+    elif opt == "2":
+        print("Option selected is from ATM")
+        agent_no = input("Enter ATM number: ")
+        withd = input("Enter amount to withdraw: ")
+        print(f"Withdraw Ksh {withd} from ATM number {agent_no}?")
+        pre()
+        validate_pin()
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{trcode} - Confirmed: Ksh {withd} withdrawn from ATM number {agent_no} on {current_time}")
     else:
-        print("maximum amount reached terminating process")
+        print("Invalid option")
         quit()
-def pinc():
-    p = "1234"
-    max_att = 3
-    s = input("enter pin: ")
-    if s == p:
+def loans():
+    print("Option selected is loans and savings")
+    print("1. Mshwari")
+    print("2. KCB bank")
+    m1 = input("Enter option: ")
+    if m1 == "1":
+        print("Option selected is Mshwari")
+        print("1. Send to Mshwari")
+        print("2. Withdraw from Mshwari")
+        print("3. Lock savings")
+        print("4. Check balance")
+        print("5. Mini statement")
+        m2 = input("Enter option: ")
+        if m2 == "1":
+            mamnt = int(input("Enter amount: "))
+            pre()
+            validate_pin()
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"{trcode} - Confirmed: Ksh {mamnt} sent to Mshwari on {current_time}")
+        elif m2 == "2":
+            wms = input("Enter amount: ")
+            pre()
+            validate_pin()
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            print(f"{trcode} - Confirmed: Ksh {wms} withdrawn from Mshwari, at {current_time}")
+        elif m2 == "3":
+            print("Lock savings option selected")
+            print("Saving is in progress...")
+            pre()
+            validate_pin()
+        else:
+            print("Invalid option")
+            quit()
+def lipa():
+    print("Option selected is lipa na mpesa")
+    print("1. Pay bill")
+    print("2. Buy goods and services")
+    f1 = input("Enter option: ")
+    if f1 == "1":
+        pb = input("Enter paybill number: ")
+        pamnt = input("Enter amount to pay: ")
+        pre()
+        validate_pin()
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"{trcode} - Confirmed: Ksh {pamnt} paid to paybill number {pb} , at {current_time}")
+    else:
+        print("Invalid option")
+
+    if f1 == "2":
+        print("option selected is buy goods and services")
+        bill = input("enter bill no: ")
+        bill_amount = input("enter amount to send: ")
+        print(f"would you like to send", bill_amount, "to", bill, "?") 
+        pre()
+        validate_pin()
+        print(f"{trcode} - confirmed ksh {bill_amount}, sent to {bill}, on {current_time}")
+def my_acc():
+    print("1. mini statement")
+    print("2. check balance")
+    print("3. check pin")
+    choosing = input("enter option: ")
+    if choosing == "1":
+        print("this option is under maintainance please wait. you will be notified when it is available.")
+    if choosing == "2":
+        print(f"{trcode}, confirmed you balance is ksh: {baldict["balances"]}, at {current_time}")
+    if choosing == "3":
+        change_pin()
+def pre():
+    print("Press 1 to accept and 2 to decline")
+    ans = input("Enter option: ")
+    if ans == "1":
         pass
     else:
-        print("incorrect pin")
-        quit()
-def pre():
-    print("press 1 to accept and 2 to decline")
-    ans = input("enter option: ")
-    if ans == "1":
-         pass
-    else:
+        print("Invalid option")
         quit()
 
-choice = int(input("enter option: "))
+choice = int(input("Enter option: "))
+
+
 if choice == 1:
-    print("send money")
-    num = input("enter number: ")
-    amnt = input("enter amount: ")
-    print("send money to", num , "ksh ", amnt, "?")
-    pre()
+     sendmoney()
+    
 
-    #pin = input("enter pin: ")
-    pinc()
-    print("confirmed ksh", amnt, "sent to", num, "at this time")
-    #include system produced time
+elif choice == 2:
+    withdraw()
 
-if choice == 2:
-    print("option selected is withdraw cash")
-    print("1. from agent no")
-    print("2. from atm")
-    opt = input("enter option: ")
-    if opt := 1:
-        print("option selected is from agent no")
-        agent_no = input("enter agent no: ")
-        withd = input("enter amount to withdraw: ")
-        print("withdraw ksh", withd, "from no", agent_no, "?")
-        pre()
-        pinc()
-        print("confirmed withdraw", withd, "from agent no", agent_no)
-        #recompose this message with systm generated time included.
-if choice == 3:
-    print("option selected is loans and savings")
-    print("1. mshwari")
-    print("2. kcb bank")
-    m1 = input("enter option: ")
-    if m1 := 1:
-        print("option selected is mshwari")
-        print("1. send to mshwari")
-        print("2. withdraw from mshwari")
-        print("3. lock savings")
-        print("4. check balance")
-        print("5. mini statement")
-        m2 = input("enter option: ")
-        if m2 == "1":
-            mamnt = int(input("enter amount: "))
-            pre()
-            pinc()
-            print("confirmed ksh", mamnt, "sent to mshwari on", time,"new mshwari balance is", mamnt )
-            quit()
-        if m2 == "2":
-            #remember to solve this problem tommorow
-            wms = input("enter amount: ")
-           #bal = mamnt
-            pre()
-            pinc()
-            print("confirmed withdraw ksh: ", wms)
-        if m2 == "3":
-            print("option selected is lock saving account")
-            print("open lock savings account")
-            print("1. save")
-            print("2. withdraw")
-            print("3. check balance")
-            print("4. mini statement")
-            op1 = input("enter option: ")
-            if op1 == "1":
-                print("1. from mpesa")
-                print("2. from mshwari")
-                target = input("enter target: ")
-                print("enter period")
-                period = input("enter period: ")
-                samnt = input("enter amount to save: ")
-                pre()
-                pinc()
-                print("confirmed ksh", samnt, "has been moved from mpesa to lock savings")
-                quit(3)
+elif choice == 3:
+   loans()
 
-            if op1 == "2":
-                want = input("enter amount to withdraw: ")
-                pre()
-                pinc()
-                print("confirmed ksh", want, "has been withdrawn from mshwari")
-                #remember to include bal after withdrawal and also figure out how to include bal from above to be used below
-            if op1 == "3":
-                print("under construction will soon work")
-                quit()
-        if m2 == "4":
-            print("option selected is loan")
-            print("1. request loan")
-            print("2. pay loan")
-            print("3. check loan limit")
-            print("4. check loan balance")
-            l1 = input("enter option: ")
-            if l1 == "1":
-                a1 = input("enter amount: ")
-                pre()
-                pinc()
-                print("this amount", a1, "has been advanced as a loan")
-            if l1 == "2":
-                l2 == input("enter amount: ")
-                pre()
-                pinc()
-                print("am working on this")
-                #dont leave this part alone just look for a way to fix it
-                quit()
-            if l1 == "3":
-                pre()
-                pinc()
-                print("you  don't have a loan limit save more on mshwari to grow your loan limit")
-            if l1 == "4":
-                pre()
-                pinc()
-                print("you dont have a loan balance. request for a loan to have a loan limit")
-        if m2 == "5":
-            pre()
-            pinc()
-            print("your mshwari balance is ksh ")
-            #remember to work on this5
-    if choice == "4":
-        print("option selected is lipa na mpesa")
-        print("1. pay bill")
-        print("2. buy goods and services")
-        print("3. pochi la biashara")
-        f1 = input("enter option")
-        if f1  == "1":
-            pb = input("enter paybill no: ")
-            pamnt = input("enter amount to pay")
-            pre()
-            pinc()
-
-
-
-
-
+elif choice == 4:
+    lipa()
+if choice == 5:
+    my_acc()
